@@ -19,9 +19,9 @@ the MLB schedule as available, with times TBD. To show live availability:
 1. Open the **Phillies Season Ticket 2027** sheet in Google Drive (Phillies folder).
 2. **Extensions > Apps Script**, replace the contents of `Code.gs` with
    [`2027/Code.gs`](2027/Code.gs), and save.
-3. Optional: run `setupCheckboxes` once from the editor to turn the Ticket Forwarded,
+3. Run `setupCheckboxes` once from the editor to turn the Ticket Forwarded,
    Ticket Platform Sale, Self Sell and Attended Game columns into checkboxes
-   (or select those cells and use **Insert > Checkbox**).
+   (or select those cells and use **Insert > Checkbox**). Existing ticks are kept.
 4. **Deploy > New deployment > Web app**, with *Execute as: Me* and
    *Who has access: Anyone*. Approve the permissions prompt.
 5. Copy the web app URL (it ends in `/exec`) into `APPS_SCRIPT_URL` near the top of

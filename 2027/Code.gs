@@ -57,7 +57,8 @@ function readGames_() {
 
 /**
  * Run once from the editor: turns the TRUE/FALSE columns into checkboxes.
- * (Same as selecting those cells and choosing Insert > Checkbox.)
+ * insertCheckboxes() sets every cell to FALSE, so the current ticks are saved
+ * first and put back, which makes it safe to run after sales are entered.
  */
 function setupCheckboxes() {
   const sheet = getGamesSheet_(SpreadsheetApp.getActiveSpreadsheet());
@@ -72,7 +73,10 @@ function setupCheckboxes() {
   CHECKBOX_COLUMNS.forEach(name => {
     const c = header.indexOf(name);
     if (c < 0) throw new Error('Missing column: ' + name);
-    sheet.getRange(2, c + 1, lastGameRow - 1, 1).insertCheckboxes();
+    const range = sheet.getRange(2, c + 1, lastGameRow - 1, 1);
+    const ticks = range.getValues().map(row => [row[0] === true]);
+    range.insertCheckboxes();
+    range.setValues(ticks);
   });
 }
 
