@@ -142,13 +142,15 @@ function getGamesSheet_(ss) {
   return ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
 }
 
-// Row number of the last game (the last row with a date in Game Date)
+// Row number of the last game (the last row with a date in Game Date).
+// Before setupSheet applies the date format, uploaded dates are plain serial numbers (46478 = 4/1/2027).
 function lastGameRow_(sheet) {
   const values = sheet.getDataRange().getValues();
   const dateCol = findColumns_(values[0], COLUMNS).date;
   let last = 1;
   values.forEach((row, i) => {
-    if (row[dateCol] instanceof Date) last = i + 1;
+    const date = row[dateCol];
+    if (date instanceof Date || (typeof date === 'number' && date > 0)) last = i + 1;
   });
   if (last < 2) throw new Error('No game rows found');
   return last;
